@@ -10,7 +10,7 @@ $REDIS = Redis.new
 def find(key)
 	if ($REDIS.exists key)
 		value = $REDIS.get(key)
-		puts value
+		puts "#{key} is a #{value}."
 	else
 		puts "Key #{key}, not found."
 	end
@@ -48,11 +48,38 @@ def renameKey(oldKey, newKey)
 	end
 end
 
-add('Todd', 'Beagle')
-find('Todd')
-updateValue('Todd', 'Cat')
-find('Todd')
-renameKey('Todd', "Kyle")
-find('Todd')
+class Dog
+	def initialize(name, breed, age, color)
+		@name = name
+		@breed = breed
+		@age = age
+		@color = color
+	end
+
+	def pedigree
+		"#{@breed}"
+	end
+
+	def name
+		"#{@name}"
+	end
+
+	def age
+		"#{@age}"
+	end
+
+	def color
+		"#{@color}"
+	end
+end
+
+todd = Dog.new('Todd', 'Beagle', '5', 'Tri-color')
+
+add(todd.name, todd.pedigree)
+find(todd.name)
+updateValue(todd.name, 'Cat')
+find(todd.name)
+renameKey(todd.name, "Kyle")
+find(todd.name)
 find('Kyle')
 delete('Kyle')
